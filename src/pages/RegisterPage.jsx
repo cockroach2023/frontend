@@ -7,7 +7,7 @@ const RegisterPage = () => {
       <Header />
 
       <div className="flex justify-center items-center w-screen h-screen bg-neutral-100 font-['JeonjuCraftGoR']">
-        <div className="flex flex-row w-1/2 h-2/3 relative">
+        <div className="flex flex-row w-1/2 h-3/4 relative">
           <div className="w-1/3 absolute left-0 h-full">
             <div className="w-full h-full absolute bg-[url('./assets/login_pic.jpg')] bg-containe bg-center"></div>
             <div className="w-full h-full relative top-0 right-0 bg-black opacity-50">
