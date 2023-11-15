@@ -7,6 +7,7 @@ export default {
         SangSangShin: ["SangSangShin"],
         PyeongChangPeace: ["PyeongChangPeace-Bold"],
         JeonjuCraftGoR: ["JeonjuCraftGoR"],
+        WhiteAngelica: ["WhiteAngelica.ttf"],
       },
     },
   },

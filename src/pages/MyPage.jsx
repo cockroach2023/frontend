@@ -9,7 +9,7 @@ const MyPage = () => {
       <Header />
 
       <div className="w-screen h-screen font-['JeonjuCraftGoR'] flex w-inherit">
-        <div className="w-80 h-full border-r flex flex-col pt-28 items-center gap-4">
+        <div className="w-80 h-full border-r flex flex-col pt-28 items-center gap-4 overflow-y-scroll">
           <div className="text-2xl">Profile</div>
           <div className="w-60 h-60 bg-slate-100 rounded-lg"></div>
           <div className="w-60 flex gap-2 border-b pb-1">

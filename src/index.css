@@ -21,9 +21,16 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'WhiteAngelica';
+  src: url("./fonts/WhiteAngelica.ttf");
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* width */
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 0px;
   height: 7px;
 }
 
