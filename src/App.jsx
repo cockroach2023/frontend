@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import MyPage from "./pages/MyPage.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
+import ProductCreatePage from "./pages/ProductCreatePage.jsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/product" element={<ProductPage />} />
+      <Route path="/product-create" element={<ProductCreatePage />} />
       <Route path="/" element={<MainPage />} />
     </Routes>
   );

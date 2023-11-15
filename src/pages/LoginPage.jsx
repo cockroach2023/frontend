@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header.jsx";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const nivigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = async () => {
+    const form_data = new FormData();
+
+    form_data.append("username", formData.username);
+    form_data.append("password", formData.password);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/user/login",
+        form_data,
+      );
+
+      const { access_token } = response.data;
+
+      // 세션 스토리지 내 저장
+      sessionStorage.setItem("access_token", access_token);
+      sessionStorage.setItem("is_login", "true");
+      nivigate("/");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <div>
       <Header />
@@ -13,14 +50,26 @@ const LoginPage = () => {
               <div className="text-5xl">Welcome!</div>
               <div className="w-full">
                 <div className="text-gray-400 w-full">아이디</div>
-                <input className="border-b w-full" />
+                <input
+                  className="border-b w-full"
+                  name="username"
+                  onChange={handleChange}
+                />
               </div>
               <div className="w-full">
                 <div className="w-full text-gray-400">비밀번호</div>
-                <input className="w-full border-b" />
+                <input
+                  className="w-full border-b"
+                  type="password"
+                  name="password"
+                  onChange={handleChange}
+                />
               </div>
 
-              <button className="rounded-3xl bg-slate-400 w-full h-10 text-white">
+              <button
+                className="rounded-3xl bg-slate-400 w-full h-10 text-white"
+                onClick={handleLogin}
+              >
                 Sign In
               </button>
             </div>

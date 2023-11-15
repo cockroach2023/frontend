@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header.jsx";
 import EachProduct from "../components/EachProduct.jsx";
 
-const City = [
+export const City = [
   "서울특별시",
   "부산광역시",
   "대구광역시",
@@ -19,7 +19,7 @@ const City = [
   "전라북도",
   "전라남도",
 ];
-const Seoul = [
+export const Seoul = [
   "강남구",
   "강동구",
   "강북구",
@@ -47,7 +47,7 @@ const Seoul = [
   "중랑구",
 ];
 
-const Busan = [
+export const Busan = [
   "강서구",
   "금정구",
   "기장군",
@@ -66,7 +66,7 @@ const Busan = [
   "해운대구",
 ];
 
-const Daegu = [
+export const Daegu = [
   "남구",
   "달서구",
   "달성군",
@@ -77,7 +77,7 @@ const Daegu = [
   "중구",
 ];
 
-const Incheon = [
+export const Incheon = [
   "강화군",
   "계양구",
   "남구",
@@ -89,13 +89,13 @@ const Incheon = [
   "중구",
 ];
 
-const Gwangju = ["광산구", "남구", "동구", "북구", "서구"];
+export const Gwangju = ["광산구", "남구", "동구", "북구", "서구"];
 
-const Daejeon = ["대덕구", "동구", "서구", "유성구", "중구"];
+export const Daejeon = ["대덕구", "동구", "서구", "유성구", "중구"];
 
-const Ulsan = ["남구", "동구", "북구", "중구", "울주군"];
+export const Ulsan = ["남구", "동구", "북구", "중구", "울주군"];
 
-const Gyeonggi = [
+export const Gyeonggi = [
   "가평군",
   "고양시",
   "과천시",
@@ -129,7 +129,7 @@ const Gyeonggi = [
   "화성시",
 ];
 
-const Gangwon = [
+export const Gangwon = [
   "강릉시",
   "고성군",
   "동해시",
@@ -149,7 +149,7 @@ const Gangwon = [
   "횡성군",
 ];
 
-const ChungcheongNorth = [
+export const ChungcheongNorth = [
   "괴산군",
   "단양군",
   "보은군",
@@ -164,7 +164,7 @@ const ChungcheongNorth = [
   "충주시",
 ];
 
-const ChungcheongSouth = [
+export const ChungcheongSouth = [
   "계룡시",
   "공주시",
   "금산군",
@@ -183,7 +183,7 @@ const ChungcheongSouth = [
   "홍성군",
 ];
 
-const GyeongsangNorth = [
+export const GyeongsangNorth = [
   "경산시",
   "경주시",
   "고령군",
@@ -208,7 +208,7 @@ const GyeongsangNorth = [
   "포항시",
 ];
 
-const GyeongsangSouth = [
+export const GyeongsangSouth = [
   "거제시",
   "거창군",
   "고성군",
@@ -229,7 +229,7 @@ const GyeongsangSouth = [
   "합천군",
 ];
 
-const JeollaNorth = [
+export const JeollaNorth = [
   "고창군",
   "군산시",
   "김제시",
@@ -246,7 +246,7 @@ const JeollaNorth = [
   "진안군",
 ];
 
-const JeollaSouth = [
+export const JeollaSouth = [
   "강진군",
   "고흥군",
   "곡성군",
@@ -344,7 +344,6 @@ const MainPage = () => {
                   {detailValue.map((value, index) => (
                     <option key={index}>{value}</option>
                   ))}
-                  <option></option>
                 </select>
               </div>
             </div>
