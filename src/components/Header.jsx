@@ -14,6 +14,8 @@ const Header = () => {
   const logout = () => {
     setIsLogin(false);
     sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("is_login");
+    sessionStorage.removeItem("user_id");
   };
 
   useEffect(() => {
