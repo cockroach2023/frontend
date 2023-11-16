@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Alertmodal from "./Alertmodal.jsx";
 import { Link, useNavigate } from "react-router-dom";
+import useSWR from "swr";
 
 const Header = () => {
   // const navigate = useNavigate();
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+
   const hoverAlarm = () => {
     setIsAlarmOpen((prev) => !prev);
   };
@@ -56,11 +58,15 @@ const Header = () => {
               </svg>
               {isAlarmOpen ? <Alertmodal /> : <></>}
             </div>
+
             <div className="cursor-pointer">
               <Link to="/product-create">글 작성하기</Link>
             </div>
             <div className="cursor-pointer" onClick={logout}>
               로그아웃
+            </div>
+            <div className="cursor-pointer">
+              <Link to="/mypage">마이페이지</Link>
             </div>
           </>
         )}

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header.jsx";
 import EachProduct from "../components/EachProduct.jsx";
+import useSWR from "swr";
+import fetcher from "../utils/fetchers.js";
+import { useRecoilState } from "recoil";
+import { titleState } from "../state/atoms.js";
 
 export const City = [
   "서울특별시",
@@ -257,9 +261,21 @@ export const JeollaSouth = [
 ];
 
 const MainPage = () => {
-  const [cityValue, setCityValue] = useState();
+  const [cityValue, setCityValue] = useState("");
+  const [detail, setDetail] = useState("");
   const [detailValue, setDetailValue] = useState([]);
 
+  const [title, setTitle] = useRecoilState(titleState);
+  const [area, setArea] = useState("");
+  const [lowPrice, setLowPrice] = useState(0);
+  const [highPrice, setHighPrice] = useState(1000000);
+  // low rendering, cache 사용을 위한 Hook
+  const { data } = useSWR(
+    `http://localhost:8000/product?title=${title}&area=${area}&price_start=${lowPrice}&price_end=${highPrice}`,
+    fetcher,
+  );
+
+  console.log(data);
   useEffect(() => {
     switch (cityValue) {
       case "서울특별시":
@@ -312,18 +328,25 @@ const MainPage = () => {
     }
   }, [cityValue]);
 
+  useEffect(() => {
+    setArea(cityValue + " " + detail);
+  }, [cityValue, detail]);
+
   return (
     <div>
       <Header />
       <div className="min-h-screen font-['JeonjuCraftGoR'] p-28">
         {/* 상단 검색 창 */}
 
-        <div className="mt-20 border p-5 px-60">
-          <div>
+        <div className="mt-20 border p-5 px-40">
+          <div className="w-full">
             <div className="border-b flex justify-between items-center p-3">
-              <div>검색어 입력</div>
-              <input className="border" />
-              <button>검색하기</button>
+              <div className="w-32">검색어 입력</div>
+              <input
+                className="border w-full"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </div>
 
             <div className="flex border-b p-3 gap-2">
@@ -340,9 +363,16 @@ const MainPage = () => {
                     <option key={index}>{value}</option>
                   ))}
                 </select>
-                <select className="grow border">
+                <select
+                  className="grow border"
+                  onChange={(e) => {
+                    setDetail(e.target.value);
+                  }}
+                >
                   {detailValue.map((value, index) => (
-                    <option key={index}>{value}</option>
+                    <option value={value} key={index}>
+                      {value}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -350,9 +380,19 @@ const MainPage = () => {
             <div className="flex p-3 flex justify-between">
               <div>최소/최대 가격 지정</div>
               <span>최소 가격 </span>
-              <input type="text" className="border" />
+              <input
+                type="number"
+                className="border"
+                value={lowPrice}
+                onChange={(e) => setLowPrice(e.target.value)}
+              />
               <span>최대 가격</span>
-              <input type="text" className="border" />
+              <input
+                type="number"
+                className="border"
+                value={highPrice}
+                onChange={(e) => setHighPrice(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -360,10 +400,9 @@ const MainPage = () => {
         {/* 최신 게시물 순 */}
 
         <div className="border grid mt-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 pr-10 p-8">
-          <EachProduct></EachProduct>
-          <EachProduct></EachProduct>
-          <EachProduct></EachProduct>
-          <EachProduct></EachProduct>
+          {data?.map((value) => (
+            <EachProduct value={value}></EachProduct>
+          ))}
         </div>
       </div>
     </div>

@@ -19,6 +19,7 @@ import {
   Seoul,
   Ulsan,
 } from "./MainPage.jsx";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [cityValue, setCityValue] = useState();

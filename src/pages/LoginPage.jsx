@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const nivigate = useNavigate();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -34,7 +35,7 @@ const LoginPage = () => {
       // 세션 스토리지 내 저장
       sessionStorage.setItem("access_token", access_token);
       sessionStorage.setItem("is_login", "true");
-      nivigate("/");
+      navigate("/");
     } catch (error) {
       console.error("Error:", error);
     }
