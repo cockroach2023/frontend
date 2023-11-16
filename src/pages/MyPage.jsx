@@ -80,7 +80,7 @@ const MyPage = () => {
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, []);
 
   const { data, mutate } = useSWR(
     "http://localhost:8000/keyword",
@@ -111,6 +111,7 @@ const MyPage = () => {
       <Header />
 
       <div className="w-screen h-screen font-['JeonjuCraftGoR'] flex w-inherit">
+        {/* {liked && selling && purchased && ( */}
         <div className="w-80 h-full border-r flex flex-col pt-28 items-center gap-4 overflow-y-scroll">
           <div className="text-2xl">Profile</div>
           <div className="w-60 h-60 rounded-lg">
@@ -184,6 +185,7 @@ const MyPage = () => {
             </div>
           </div>
         </div>
+        {/* )} */}
 
         <div className="h-full flex-1 pt-28 p-28 overflow-y-scroll gap-6">
           <div className="flex flex-col gap-3 mb-10">
