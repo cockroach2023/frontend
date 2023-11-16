@@ -10,10 +10,28 @@ import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const [keyword, setKeyword] = useState();
+  const [profile, setProfile] = useState();
+
+  useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token");
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json", // You may need to adjust the content type based on your API requirements
+    };
+    axios
+      .get("http://localhost:8000/user/me", { headers })
+      .then((response) => {
+        setProfile(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const { data, mutate } = useSWR(
     "http://localhost:8000/keyword",
-    fetcher_with_user,
+    fetcher_with_user
   );
   const addKeyword = () => {
     const access_token = sessionStorage.getItem("access_token");
@@ -28,7 +46,7 @@ const MyPage = () => {
         {
           content: keyword,
         },
-        { headers },
+        { headers }
       )
       .then((response) => {
         console.log(response);
@@ -42,7 +60,14 @@ const MyPage = () => {
       <div className="w-screen h-screen font-['JeonjuCraftGoR'] flex w-inherit">
         <div className="w-80 h-full border-r flex flex-col pt-28 items-center gap-4 overflow-y-scroll">
           <div className="text-2xl">Profile</div>
-          <div className="w-60 h-60 bg-slate-100 rounded-lg"></div>
+          <div className="w-60 h-60 rounded-lg">
+            {profile &&
+              (profile.profile ? (
+                <img src={profile.profile}></img>
+              ) : (
+                <div className="bg-slate-200 rounded-full w-full h-full" />
+              ))}
+          </div>
           <div className="w-60 flex gap-2 border-b pb-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +83,7 @@ const MyPage = () => {
                 d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
               />
             </svg>
-            <div>홍길동</div>
+            <div>{profile && profile.nickname}</div>
           </div>
           <div className="w-60 flex gap-2 border-b pb-1">
             <svg
@@ -81,7 +106,7 @@ const MyPage = () => {
               />
             </svg>
 
-            <div>서울광역시 성수동</div>
+            <div>{profile && profile.activity_area}</div>
           </div>
           <div className="text-xl w-60 border p-2 rounded-md text-center mt-10">
             관심 키워드 추가하기
