@@ -6,11 +6,13 @@ import axios from "axios";
 import useSWR from "swr";
 import { fetcher_with_user } from "../utils/fetchers.js";
 import KeywordComponent from "../components/KeywordComponent.jsx";
-import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
-  const [keyword, setKeyword] = useState();
-  const [profile, setProfile] = useState();
+  const [keyword, setKeyword] = useState([]);
+  const [profile, setProfile] = useState(null);
+  const [liked, setLiked] = useState([]);
+  const [selling, setSelling] = useState([]);
+  const [purchased, setPurchased] = useState([]);
 
   useEffect(() => {
     const access_token = sessionStorage.getItem("access_token");
@@ -29,6 +31,57 @@ const MyPage = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token");
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json",
+    };
+    axios
+      .get("http://localhost:8000/product/user/liked", { headers })
+      .then((response) => {
+        setLiked(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token");
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json",
+    };
+    axios
+      .get("http://localhost:8000/product/user/selling", { headers })
+      .then((response) => {
+        setSelling(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token");
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json",
+    };
+    axios
+      .get("http://localhost:8000/product/user/purchased", { headers })
+      .then((response) => {
+        setPurchased(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
   const { data, mutate } = useSWR(
     "http://localhost:8000/keyword",
     fetcher_with_user
@@ -38,7 +91,7 @@ const MyPage = () => {
 
     const headers = {
       Authorization: `Bearer ${access_token}`,
-      "Content-Type": "application/json", // You may need to adjust the content type based on your API requirements
+      "Content-Type": "application/json",
     };
     axios
       .post(
@@ -124,70 +177,37 @@ const MyPage = () => {
           </div>
 
           <div className="w-60 flex gap-1 flex-wrap">
-            {data?.data.map((value, index) => (
-              <KeywordComponent key={index} value={value} />
-            ))}
+            <div className="flex flex-col gap-3 mb-10">
+              {data?.data.map((value, index) => (
+                <KeywordComponent key={index} value={value} />
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="h-full flex-1 pt-28 p-28 overflow-y-scroll gap-6">
           <div className="flex flex-col gap-3 mb-10">
-            <div className="text-2xl">관심 내역</div>
+            <div className="text-2xl">좋아요 누른 상품</div>
             <div className="w-full h-60 overflow-x-scroll whitespace-nowrap snap-x overflow-y-hidden">
-              <ProductComponent />
-              <ProductComponent />
+              {liked.map((product) => (
+                <ProductComponent key={product.id} product={product} />
+              ))}
             </div>
           </div>
           <div className="flex flex-col gap-3 mb-10">
-            <div className="text-2xl">판매 내역</div>
+            <div className="text-2xl">판매 중인 상품</div>
             <div className="w-full h-60 overflow-x-scroll whitespace-nowrap snap-x overflow-y-hidden">
-              <div className="w-48 h-48 bg-slate-100 inline-block m-4 snap-center relative">
-                <div className="absolute bottom-0 flex flex-col justify-center items-center w-full bg-black text-white opacity-50">
-                  <div className="border-b">냉장고 팝니다..!</div>
-                  <div>가격 : 300000</div>
-                </div>
-              </div>
-              <div className="w-48 h-48 bg-slate-100 inline-block m-4 snap-center relative">
-                <div className="absolute bottom-0 flex flex-col justify-center items-center w-full bg-black text-white opacity-50">
-                  <div className="border-b">냉장고 팝니다..!</div>
-                  <div>가격 : 300000</div>
-                </div>
-              </div>
-              <div className="w-48 h-48 bg-slate-100 inline-block m-4 snap-center relative">
-                <div className="absolute bottom-0 flex flex-col justify-center items-center w-full bg-black text-white opacity-50">
-                  <div className="border-b">냉장고 팝니다..!</div>
-                  <div>가격 : 300000</div>
-                </div>
-              </div>
-              <div className="w-48 h-48 bg-slate-100 inline-block m-4 snap-center relative">
-                <div className="absolute bottom-0 flex flex-col justify-center items-center w-full bg-black text-white opacity-50">
-                  <div className="border-b">냉장고 팝니다..!</div>
-                  <div>가격 : 300000</div>
-                </div>
-              </div>
-              <div className="w-48 h-48 bg-slate-100 inline-block m-4 snap-center relative">
-                <div className="absolute bottom-0 flex flex-col justify-center items-center w-full bg-black text-white opacity-50">
-                  <div className="border-b">냉장고 팝니다..!</div>
-                  <div>가격 : 300000</div>
-                </div>
-              </div>
+              {selling.map((product) => (
+                <ProductComponent key={product.id} product={product} />
+              ))}
             </div>
           </div>
           <div className="flex flex-col gap-3 mb-10">
-            <div className="text-2xl">구매 내역</div>
+            <div className="text-2xl">구매한 상품</div>
             <div className="w-full h-60 overflow-x-scroll whitespace-nowrap snap-x overflow-y-hidden">
-              <div className="w-48 h-48 bg-slate-100 inline-block m-4 snap-center relative">
-                <div className="absolute bottom-0 flex flex-col justify-center items-center w-full bg-black text-white opacity-50">
-                  <div className="border-b">냉장고 팝니다..!</div>
-                  <div>가격 : 300000</div>
-                </div>
-              </div>
-              <div className="w-48 h-48 bg-slate-100 inline-block m-4 snap-center relative">
-                <div className="absolute bottom-0 flex flex-col justify-center items-center w-full bg-black text-white opacity-50">
-                  <div className="border-b">냉장고 팝니다..!</div>
-                  <div>가격 : 300000</div>
-                </div>
-              </div>
+              {purchased.map((product) => (
+                <ProductComponent key={product.id} product={product} />
+              ))}
             </div>
           </div>
         </div>
