@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header.jsx";
 import ProductRequest from "../components/ProductRequest.jsx";
 import ProductComponent from "../components/ProductComponent.jsx";
+import axios from "axios";
+import useSWR from "swr";
+import { fetcher_with_user } from "../utils/fetchers.js";
+import KeywordComponent from "../components/KeywordComponent.jsx";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
+  const [keyword, setKeyword] = useState();
+
+  const { data, mutate } = useSWR(
+    "http://localhost:8000/keyword",
+    fetcher_with_user,
+  );
+  const addKeyword = () => {
+    const access_token = sessionStorage.getItem("access_token");
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json", // You may need to adjust the content type based on your API requirements
+    };
+    axios
+      .post(
+        "http://localhost:8000/keyword",
+        {
+          content: keyword,
+        },
+        { headers },
+      )
+      .then((response) => {
+        console.log(response);
+        mutate();
+      });
+  };
   return (
     <div>
       <Header />
@@ -56,78 +87,21 @@ const MyPage = () => {
             관심 키워드 추가하기
           </div>
           <div className="flex gap-2 w-60 justify-between border-b pb-3">
-            <input placeholder="키워드 입력..." className="border p-1" />
-            <button className="border p-1">추가</button>
+            <input
+              placeholder="키워드 입력..."
+              className="border p-1"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <button className="border p-1" onClick={addKeyword}>
+              추가
+            </button>
           </div>
 
           <div className="w-60 flex gap-1 flex-wrap">
-            <div className="flex gap-2 border w-fit rounded-2xl p-1 items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 6h.008v.008H6V6z"
-                />
-              </svg>
-              <span className="text-sm">토마토</span>
-            </div>
-            <div className="flex gap-2 border w-fit rounded-2xl p-1 items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 6h.008v.008H6V6z"
-                />
-              </svg>
-              <span className="text-sm">냉장고</span>
-            </div>
-
-            <div className="flex gap-2 border w-fit rounded-2xl p-1 items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 6h.008v.008H6V6z"
-                />
-              </svg>
-              <span className="text-sm">신발</span>
-            </div>
+            {data?.data.map((value, index) => (
+              <KeywordComponent key={index} value={value} />
+            ))}
           </div>
         </div>
 

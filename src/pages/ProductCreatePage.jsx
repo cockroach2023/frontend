@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header.jsx";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProductCreatePage = () => {
+  const navigate = useNavigate();
+
   const [productData, setProductData] = useState({
     title: "",
     description: "",
@@ -52,6 +55,7 @@ const ProductCreatePage = () => {
       );
 
       console.log("Product created successfully!");
+      navigate("/");
       console.log(response);
     } catch (error) {
       console.error("Error creating product:", error);
