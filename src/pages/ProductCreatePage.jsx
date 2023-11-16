@@ -19,7 +19,7 @@ const ProductCreatePage = () => {
     setSelectedImage(file);
     setProductData((prevData) => ({
       ...prevData,
-      image: "image sample",
+      image: file,
     }));
   };
   const handleInputChange = (e) => {
@@ -33,22 +33,20 @@ const ProductCreatePage = () => {
     try {
       const priceFloat = parseFloat(productData.price);
 
-      const requestData = {
-        title: productData.title,
-        description: productData.description,
-        price: priceFloat,
-        // Assuming productData.image is a URL or base64-encoded image data
-        image: productData.image,
-      };
+      const formData = new FormData();
+      formData.append("title", productData.title);
+      formData.append("description", productData.description);
+      formData.append("price", priceFloat);
+      formData.append("image", productData.image);
 
       const token = sessionStorage.getItem("access_token");
 
       const response = await axios.post(
         "http://127.0.0.1:8000/product",
-        requestData,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Set content type to JSON
+            "Content-Type": "multipart/form-data", // Set content type to FormData
             Authorization: `Bearer ${token}`,
           },
         },

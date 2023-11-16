@@ -35,11 +35,27 @@ const LoginPage = () => {
       // 세션 스토리지 내 저장
       sessionStorage.setItem("access_token", access_token);
       sessionStorage.setItem("is_login", "true");
-      navigate("/");
+      getUserId(access_token);
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+  const getUserId = async (access_token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/user/me", {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      sessionStorage.setItem("user_id", response.data.user_id);
+      navigate("/");
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
+
   return (
     <div>
       <Header />

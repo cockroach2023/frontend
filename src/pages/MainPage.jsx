@@ -338,22 +338,22 @@ const MainPage = () => {
       <div className="min-h-screen font-['JeonjuCraftGoR'] p-28">
         {/* 상단 검색 창 */}
 
-        <div className="mt-20 border p-5 px-40">
-          <div className="w-full">
+        <div className="mt-20 border border-slate-500 p-5 px-40">
+          <div className="w-full flex flex-col gap-4">
             <div className="border-b flex justify-between items-center p-3">
-              <div className="w-32">검색어 입력</div>
+              <div className="w-32 font-bold">검색어 입력</div>
               <input
-                className="border w-full"
+                className="border w-full h-10 focus:outline-none pl-4"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
 
-            <div className="flex border-b p-3 gap-2">
-              <div className="whitespace-nowrap">지역 선택</div>
+            <div className="flex border-b p-3 gap-8 items-center">
+              <div className="whitespace-nowrap font-bold">지역 선택</div>
               <div className="w-full flex gap-2">
                 <select
-                  className="grow border"
+                  className="grow border h-10 focus:outline-none text-center"
                   value={cityValue}
                   onChange={(e) => {
                     setCityValue(e.target.value);
@@ -364,7 +364,7 @@ const MainPage = () => {
                   ))}
                 </select>
                 <select
-                  className="grow border"
+                  className="grow border h-10 focus:outline-none text-center"
                   onChange={(e) => {
                     setDetail(e.target.value);
                   }}
@@ -377,19 +377,19 @@ const MainPage = () => {
                 </select>
               </div>
             </div>
-            <div className="flex p-3 flex justify-between">
-              <div>최소/최대 가격 지정</div>
-              <span>최소 가격 </span>
+            <div className="flex p-3 flex justify-between flex-col lg:flex-row items-center">
+              <div className="font-bold">최소/최대 가격 지정</div>
+
               <input
                 type="number"
-                className="border"
+                className="border h-10 text-center focus:outline-none"
                 value={lowPrice}
                 onChange={(e) => setLowPrice(e.target.value)}
               />
-              <span>최대 가격</span>
+              <div>~</div>
               <input
                 type="number"
-                className="border"
+                className="border text-center h-10 focus:outline-none"
                 value={highPrice}
                 onChange={(e) => setHighPrice(e.target.value)}
               />
@@ -399,9 +399,9 @@ const MainPage = () => {
 
         {/* 최신 게시물 순 */}
 
-        <div className="border grid mt-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 pr-10 p-8">
-          {data?.map((value) => (
-            <EachProduct value={value}></EachProduct>
+        <div className="border-slate-500 place-items-center border grid mt-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 pr-10 p-8">
+          {data?.map((value, index) => (
+            <EachProduct key={index} value={value}></EachProduct>
           ))}
         </div>
       </div>

@@ -89,7 +89,7 @@ const RegisterPage = () => {
     }
   }, [cityValue]);
 
-  const [formData, setFormData] = useState({
+  const [formDatas, setFormData] = useState({
     username: "",
     password: "",
     activity_area: "",
@@ -106,12 +106,21 @@ const RegisterPage = () => {
 
   const handleSubmit = async () => {
     try {
+      const token = sessionStorage.getItem("access_token");
+      const formData = new FormData();
+
+      formData.append("username", formDatas.username);
+      formData.append("password", formDatas.password);
+      formData.append("activity_area", formDatas.activity_area);
+      formData.append("nickname", formDatas.nickname);
+
       const response = await axios.post(
         "http://127.0.0.1:8000/user/signup",
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         },
       );
