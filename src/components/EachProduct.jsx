@@ -13,12 +13,16 @@ const EachProduct = ({ value }) => {
     <div
       onMouseEnter={() => setIsMouseIn(true)}
       onMouseLeave={() => setIsMouseIn(false)}
-      className="relative w-60 h-60 xl:h-60 xl:w-60 2xl:h-80 2xl:w-80 flex flex-col p-4 cursor-pointer ring-2 ring-slate-200"
+      className="rounded-lg relative w-60 h-60 xl:h-60 xl:w-60 2xl:h-80 2xl:w-80 flex flex-col p-4 cursor-pointer ring-2 ring-slate-200"
     >
-      <div className="w-full h-full justify-center items-center flex">
-        <img src={value.image} alt="image" />
+      <div className="w-full h-full justify-center items-center flex r">
+        <div
+          className="w-full h-full bg-cover bg-no-repeat bg-center border rounded-lg"
+          style={{ backgroundImage: `url(${value.image})` }}
+          alt="image"
+        />
       </div>
-      <div className="border-b pb-2">{value.title}</div>
+      <div className="border-b py-2">{value.title}</div>
       <div className="pt-2">가격 : {value.price}</div>
       {isMouseIn ? (
         <div

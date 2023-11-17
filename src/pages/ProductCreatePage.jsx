@@ -53,10 +53,11 @@ const ProductCreatePage = () => {
       );
 
       console.log("Product created successfully!");
-      navigate("/");
+      window.location.href = "/";
       console.log(response);
     } catch (error) {
       console.error("Error creating product:", error);
+      alert("상품 등록 도중 문제가 발생했습니다.");
     }
   };
 

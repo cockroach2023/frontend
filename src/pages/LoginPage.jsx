@@ -36,8 +36,10 @@ const LoginPage = () => {
       sessionStorage.setItem("access_token", access_token);
       sessionStorage.setItem("is_login", "true");
       getUserId(access_token);
+      window.location.href = "/";
     } catch (error) {
       console.error("Error:", error);
+      alert("로그인 도중 문제가 발생했습니다.");
     }
   };
 
@@ -68,7 +70,7 @@ const LoginPage = () => {
               <div className="w-full">
                 <div className="text-gray-400 w-full">아이디</div>
                 <input
-                  className="border-b w-full"
+                  className="border-b w-full focus:outline-none"
                   name="username"
                   onChange={handleChange}
                 />
@@ -76,7 +78,7 @@ const LoginPage = () => {
               <div className="w-full">
                 <div className="w-full text-gray-400">비밀번호</div>
                 <input
-                  className="w-full border-b"
+                  className="w-full border-b focus:outline-none"
                   type="password"
                   name="password"
                   onChange={handleChange}

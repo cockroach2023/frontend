@@ -16,6 +16,7 @@ const Header = () => {
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("is_login");
     sessionStorage.removeItem("user_id");
+    window.location.href = "/";
   };
 
   useEffect(() => {
