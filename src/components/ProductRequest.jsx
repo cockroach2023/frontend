@@ -16,7 +16,7 @@ const ProductRequest = ({ deal }) => {
         </div>
       ) : (
         <div className="absolute w-full h-full bg-black opacity-50 text-white flex justify-center items-center p-3 cursor-pointer">
-          해당 페이지로 이동하기
+          <a href={`/product/${deal.product_id}`}>해당 페이지로 이동하기</a>
         </div>
       )}
       <img src={deal.product.image} alt={deal.product.title} />

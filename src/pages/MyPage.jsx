@@ -13,6 +13,7 @@ const MyPage = () => {
   const [liked, setLiked] = useState([]);
   const [selling, setSelling] = useState([]);
   const [purchased, setPurchased] = useState([]);
+  const [deals, setDeals] = useState([]);
 
   useEffect(() => {
     const access_token = sessionStorage.getItem("access_token");
@@ -76,6 +77,23 @@ const MyPage = () => {
       .get("http://localhost:8000/product/user/purchased", { headers })
       .then((response) => {
         setPurchased(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token");
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json",
+    };
+    axios
+      .get("http://localhost:8000/deal", { headers })
+      .then((response) => {
+        setDeals(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -216,8 +234,9 @@ const MyPage = () => {
 
         <div className="h-full w-80 border-l flex flex-col pt-28 items-center gap-4 overflow-y-scroll">
           <div className="text-2xl">구매 요청</div>
-          <ProductRequest />
-          <ProductRequest />
+          {deals.map((deal) => (
+            <ProductRequest key={deal.deal_id} deal={deal} />
+          ))}
         </div>
       </div>
     </div>
