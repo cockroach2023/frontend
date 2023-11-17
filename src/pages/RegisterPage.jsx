@@ -22,7 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
-  const [cityValue, setCityValue] = useState();
+  const [cityValue, setCityValue] = useState("서울특별시");
   const [detail, setDetail] = useState();
   const [detailValue, setDetailValue] = useState([]);
 
@@ -127,8 +127,10 @@ const RegisterPage = () => {
 
       if (response.status === 200) {
         console.log("User created successfully!");
+        window.location.href = "/login";
       } else {
         console.error("Error creating user");
+        alert("회원가입 도중 문제가 발생했습니다.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -153,7 +155,7 @@ const RegisterPage = () => {
               <div className="w-full">
                 <div className="text-gray-400 w-full">아이디</div>
                 <input
-                  className="border-b w-full"
+                  className="border-b w-full focus:outline-none"
                   name="username"
                   onChange={handleChange}
                 />
@@ -161,7 +163,7 @@ const RegisterPage = () => {
               <div className="w-full">
                 <div className="w-full text-gray-400">비밀번호</div>
                 <input
-                  className="w-full border-b"
+                  className="w-full border-b focus:outline-none"
                   type="password"
                   name="password"
                   onChange={handleChange}
@@ -173,7 +175,7 @@ const RegisterPage = () => {
 
                 <div className="w-full flex gap-2">
                   <select
-                    className="grow border"
+                    className="grow border focus:outline-none py-2 mt-1 rounded-md"
                     value={cityValue}
                     onChange={(e) => {
                       setCityValue(e.target.value);
@@ -186,7 +188,7 @@ const RegisterPage = () => {
                     ))}
                   </select>
                   <select
-                    className="grow border"
+                    className="grow border focus:outline-none py-2 mt-1 rounded-md"
                     onChange={(e) => {
                       setDetail(e.target.value);
                     }}
@@ -202,7 +204,7 @@ const RegisterPage = () => {
               <div className="w-full">
                 <div className="w-full text-gray-400">닉네임</div>
                 <input
-                  className="w-full border-b"
+                  className="w-full border-b focus:outline-none"
                   name="nickname"
                   onChange={handleChange}
                 />
