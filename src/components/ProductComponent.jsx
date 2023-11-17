@@ -16,7 +16,7 @@ const ProductComponent = ({ product }) => {
         </div>
       ) : (
         <div className="absolute w-full h-full bg-black opacity-50 text-white flex justify-center items-center p-3 cursor-pointer">
-          해당 페이지로 이동하기
+          <a href={`/product/${product.product_id}`}>해당 페이지로 이동하기</a>
         </div>
       )}
       <div>
@@ -27,6 +27,7 @@ const ProductComponent = ({ product }) => {
 };
 ProductComponent.propTypes = {
   product: PropTypes.shape({
+    product_id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
