@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-const ProductRequest = () => {
+const ProductRequest = ({ deal }) => {
   const [isHover, setIsHover] = useState(false);
 
   return (
@@ -11,15 +12,35 @@ const ProductRequest = () => {
     >
       {!isHover ? (
         <div className="absolute w-full h-full bg-black opacity-50 text-white flex justify-center items-center p-3">
-          등록하신 (냉장고 팝니다..!) 에 대한 구매요청이 들어왔습니다.
+          {deal.buyer.username}님이 {deal.product.title}을 사고싶어 합니다.
         </div>
       ) : (
         <div className="absolute w-full h-full bg-black opacity-50 text-white flex justify-center items-center p-3 cursor-pointer">
           해당 페이지로 이동하기
         </div>
       )}
+      <img src={deal.product.image} alt={deal.product.title} />
     </div>
   );
+};
+ProductRequest.propTypes = {
+  deal: PropTypes.shape({
+    deal_id: PropTypes.number.isRequired,
+    product_id: PropTypes.number.isRequired,
+    buyer_id: PropTypes.number.isRequired,
+    created_at: PropTypes.string.isRequired,
+    buyer: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      nickname: PropTypes.string.isRequired,
+      activity_area: PropTypes.string.isRequired,
+      profile: PropTypes.string.isRequired,
+    }),
+    product: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 export default ProductRequest;
