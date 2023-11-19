@@ -64,13 +64,13 @@ const ProductCreatePage = () => {
   return (
     <div>
       <Header />
-      <div className="w-screen h-screen px-60">
+      <div className="w-screen h-screen px-60 font-['JeonjuCraftGoR']">
         <div className="w-full h-full border-x pt-10">
           <div className="w-full h-full flex justify-center items-center pt-60 overflow-y-scroll pb-20">
-            <div className="flex flex-col gap-2">
-              <div className="text-2xl font-bold">상품 등록</div>
+            <div className="flex flex-col gap-10">
+              <div className="text-3xl font-bold">상품 등록</div>
               <div>
-                <div>상품 명</div>
+                <div>제목 설정</div>
                 <div className="text-sm text-gray-400">
                   상품 종류와 특징이 명확히 드러나도록 해주세요
                 </div>
@@ -84,6 +84,9 @@ const ProductCreatePage = () => {
 
               <div>
                 <div>상품 설명</div>
+                <div className="text-sm text-gray-400">
+                  상품에 대한 상세한 특징이나 부가 정보를 입력해주세요.
+                </div>
                 <textarea
                   className="w-full border min-h-[100px]"
                   name="description"
@@ -94,6 +97,9 @@ const ProductCreatePage = () => {
 
               <div>
                 <div>이미지 등록</div>
+                <div className="text-sm text-gray-400">
+                  상품과 관련된 이미지를 업로드해주세요.
+                </div>
                 <input
                   type="file"
                   accept="image/*"
@@ -111,6 +117,9 @@ const ProductCreatePage = () => {
               </div>
               <div>
                 <div>가격 설정</div>
+                <div className="text-sm text-gray-400">
+                  상품의 적절한 가격을 입력해주세요.
+                </div>
                 <input
                   type="text"
                   className="border w-full"
@@ -120,7 +129,10 @@ const ProductCreatePage = () => {
                 />
               </div>
 
-              <button className="border mt-3" onClick={handleProductCreate}>
+              <button
+                className="border mt-3 p-3 bg-red-400 text-white"
+                onClick={handleProductCreate}
+              >
                 등록하기
               </button>
             </div>
