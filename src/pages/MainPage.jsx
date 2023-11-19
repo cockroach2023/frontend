@@ -5,6 +5,8 @@ import useSWR from "swr";
 import fetcher from "../utils/fetchers.js";
 import { useRecoilState } from "recoil";
 import { titleState } from "../state/atoms.js";
+import Lottie from "react-lottie";
+import MainLottieData from "../assets/main_page_image.json";
 
 export const City = [
   "서울특별시",
@@ -331,14 +333,37 @@ const MainPage = () => {
   useEffect(() => {
     setArea(cityValue + " " + detail);
   }, [cityValue, detail]);
-
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: MainLottieData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
   return (
     <div>
       <Header />
       <div className="min-h-screen font-['JeonjuCraftGoR'] p-28">
         {/* 상단 검색 창 */}
+        <div className="flex md:justify-around items-center flex-col lg:flex-row">
+          <Lottie
+            options={defaultOptions}
+            height={400}
+            width={400}
+            style={{ margin: "0" }}
+          />
+          <div className="flex flex-col gap-10">
+            <div className="font-['WhiteAngelica'] text-5xl">
+              Make old things new
+            </div>
+            <div className="font-['JeonjuCraftGoR'] text-2xl underline underline-offset-8">
+              Easily find what you want around you
+            </div>
+          </div>
+        </div>
 
-        <div className="mt-20 border border-slate-500 p-5 px-40">
+        <div className="mt-20 border border-slate-500 p-5 px-40 rounded-lg">
           <div className="w-full flex flex-col gap-4">
             <div className="border-b flex justify-between items-center p-3">
               <div className="w-32 font-bold">검색어 입력</div>
@@ -399,7 +424,7 @@ const MainPage = () => {
 
         {/* 최신 게시물 순 */}
 
-        <div className="border-slate-500 place-items-center border grid mt-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 pr-10 p-8">
+        <div className="rounded-lg border-slate-500 place-items-center border grid mt-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 pr-10 p-8">
           {data?.map((value, index) => (
             <EachProduct key={index} value={value}></EachProduct>
           ))}
