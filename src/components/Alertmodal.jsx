@@ -4,7 +4,7 @@ import fetcher, { fetcher_with_user } from "../utils/fetchers.js";
 import AlertDetail from "./AlertDetail.jsx";
 
 const Alertmodal = () => {
-  const { data } = useSWR("api/notice", fetcher_with_user);
+  const { data } = useSWR("/api/notice", fetcher_with_user);
   const [alertData, setAlertData] = useState([]);
   useEffect(() => {
     setAlertData(data?.data.reverse());

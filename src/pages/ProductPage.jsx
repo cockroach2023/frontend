@@ -29,7 +29,7 @@ const ProductPage = () => {
 
   // 댓글 지속적으로 불러오기
   const { data: commentData, mutate } = useSWR(
-    `api/product/${productId}/comment`,
+    `/api/product/${productId}/comment`,
     fetcher,
   );
 
@@ -49,7 +49,7 @@ const ProductPage = () => {
         const access_token = sessionStorage.getItem("access_token");
 
         const response = await axios.get(
-          `api/product/${params.product_id}`,
+          `/api/product/${params.product_id}`,
           {
             headers: {
               Authorization: `Bearer ${access_token}`,
@@ -70,7 +70,7 @@ const ProductPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [params]);
 
   // 구매 요청하기
   const purchaseRequest = async () => {
@@ -82,7 +82,7 @@ const ProductPage = () => {
       const access_token = sessionStorage.getItem("access_token");
 
       const response = await axios.post(
-        `api/deal/?product_id=${productId}`,
+        `/api/deal/?product_id=${productId}`,
         {},
         {
           // 헤더 설정
@@ -114,7 +114,7 @@ const ProductPage = () => {
     try {
       const access_token = sessionStorage.getItem("access_token");
 
-      const response = await axios.get(`api/deal`, {
+      const response = await axios.get(`/api/deal`, {
         // 헤더 설정
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -133,7 +133,7 @@ const ProductPage = () => {
       const access_token = sessionStorage.getItem("access_token");
 
       const response = await axios.post(
-        `api/product/${productId}/like`,
+        `/api/product/${productId}/like`,
         {},
         {
           // 헤더 설정
@@ -196,7 +196,7 @@ const ProductPage = () => {
 
       // axios를 사용하여 POST 요청 보내기
       const response = await axios.patch(
-        `api/deal/${deal_id}/accept`,
+        `/api/deal/${deal_id}/accept`,
         {},
         {
           headers,
@@ -229,7 +229,7 @@ const ProductPage = () => {
 
       // axios를 사용하여 POST 요청 보내기
       const response = await axios.post(
-        `api/product/comment?product_id=${productId}`,
+        `/api/product/comment?product_id=${productId}`,
         data,
         { headers },
       );

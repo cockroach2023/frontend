@@ -273,7 +273,7 @@ const MainPage = () => {
   const [highPrice, setHighPrice] = useState(1000000);
   // low rendering, cache 사용을 위한 Hook
   const { data } = useSWR(
-    `api/product?title=${title}&area=${area}&price_start=${lowPrice}&price_end=${highPrice}`,
+    `/api/product?title=${title}&area=${area}&price_start=${lowPrice}&price_end=${highPrice}`,
     fetcher,
   );
 

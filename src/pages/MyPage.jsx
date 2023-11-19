@@ -23,7 +23,7 @@ const MyPage = () => {
       "Content-Type": "application/json", // You may need to adjust the content type based on your API requirements
     };
     axios
-      .get("api/user/me", { headers })
+      .get("/api/user/me", { headers })
       .then((response) => {
         setProfile(response.data);
       })
@@ -40,7 +40,7 @@ const MyPage = () => {
       "Content-Type": "application/json",
     };
     axios
-      .get("api/product/user/liked", { headers })
+      .get("/api/product/user/liked", { headers })
       .then((response) => {
         setLiked(response.data);
       })
@@ -57,7 +57,7 @@ const MyPage = () => {
       "Content-Type": "application/json",
     };
     axios
-      .get("api/product/user/selling", { headers })
+      .get("/api/product/user/selling", { headers })
       .then((response) => {
         setSelling(response.data);
       })
@@ -74,7 +74,7 @@ const MyPage = () => {
       "Content-Type": "application/json",
     };
     axios
-      .get("api/product/user/purchased", { headers })
+      .get("/api/product/user/purchased", { headers })
       .then((response) => {
         setPurchased(response.data);
       })
@@ -91,7 +91,7 @@ const MyPage = () => {
       "Content-Type": "application/json",
     };
     axios
-      .get("api/deal", { headers })
+      .get("/api/deal", { headers })
       .then((response) => {
         setDeals(response.data);
       })
@@ -101,7 +101,7 @@ const MyPage = () => {
   }, []);
 
   const { data, mutate } = useSWR(
-    "api/keyword",
+    "/api/keyword",
     fetcher_with_user
   );
   const addKeyword = () => {
@@ -113,7 +113,7 @@ const MyPage = () => {
     };
     axios
       .post(
-        "api/keyword",
+        "/api/keyword",
         {
           content: keyword,
         },

@@ -42,7 +42,7 @@ const ProductCreatePage = () => {
       const token = sessionStorage.getItem("access_token");
 
       const response = await axios.post(
-        "api/product",
+        "/api/product",
         formData,
         {
           headers: {

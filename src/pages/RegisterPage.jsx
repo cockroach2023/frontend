@@ -115,7 +115,7 @@ const RegisterPage = () => {
       formData.append("nickname", formDatas.nickname);
 
       const response = await axios.post(
-        "api/user/signup",
+        "/api/user/signup",
         formData,
         {
           headers: {
