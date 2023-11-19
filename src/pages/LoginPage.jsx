@@ -26,7 +26,7 @@ const LoginPage = () => {
     form_data.append("password", formData.password);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/user/login",
+        "/api/user/login",
         form_data,
       );
 
@@ -45,7 +45,7 @@ const LoginPage = () => {
 
   const getUserId = async (access_token) => {
     try {
-      const response = await axios.get("http://localhost:8000/user/me", {
+      const response = await axios.get("/api/user/me", {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
