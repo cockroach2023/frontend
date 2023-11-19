@@ -36,7 +36,6 @@ const LoginPage = () => {
       sessionStorage.setItem("access_token", access_token);
       sessionStorage.setItem("is_login", "true");
       getUserId(access_token);
-      window.location.href = "/";
     } catch (error) {
       console.error("Error:", error);
       alert("로그인 도중 문제가 발생했습니다.");
@@ -52,7 +51,7 @@ const LoginPage = () => {
       });
 
       sessionStorage.setItem("user_id", response.data.user_id);
-      navigate("/");
+      window.location.href = "/";
     } catch (error) {
       console.error("Error: ", error);
     }

@@ -277,6 +277,11 @@ const MainPage = () => {
     fetcher,
   );
 
+  useEffect(() => {
+    setCityValue("서울특별시");
+    setDetailValue(Seoul);
+  },[])
+
   console.log(data);
   useEffect(() => {
     switch (cityValue) {
