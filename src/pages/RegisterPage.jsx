@@ -115,7 +115,7 @@ const RegisterPage = () => {
       formData.append("nickname", formDatas.nickname);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/user/signup",
+        "api/user/signup",
         formData,
         {
           headers: {
