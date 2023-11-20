@@ -38,7 +38,12 @@ const LoginPage = () => {
       getUserId(access_token);
     } catch (error) {
       console.error("Error:", error);
-      alert("로그인 도중 문제가 발생했습니다.");
+      if (error.response.status === 403) {
+        alert("해당 유저는 로그인이 불가능 합니다.(사유: 차단)");
+      } else {
+        alert("로그인 도중 문제가 발생했습니다.");
+      }
+      
     }
   };
 
@@ -51,6 +56,7 @@ const LoginPage = () => {
       });
 
       sessionStorage.setItem("user_id", response.data.user_id);
+      sessionStorage.setItem("is_admin", response.data.is_admin);
       window.location.href = "/";
     } catch (error) {
       console.error("Error: ", error);

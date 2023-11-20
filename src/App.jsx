@@ -6,11 +6,13 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import MyPage from "./pages/MyPage.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
 import ProductCreatePage from "./pages/ProductCreatePage.jsx";
+import BlackList from "./pages/BlackListPage.jsx";
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/blacklist" element={<BlackList />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/product/:product_id" element={<ProductPage />} />

@@ -7,6 +7,8 @@ const Header = () => {
   // const navigate = useNavigate();
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  
 
   const hoverAlarm = () => {
     setIsAlarmOpen((prev) => !prev);
@@ -16,13 +18,18 @@ const Header = () => {
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("is_login");
     sessionStorage.removeItem("user_id");
+    sessionStorage.removeItem("is_admin");
     window.location.href = "/";
   };
 
   useEffect(() => {
     const is_login = sessionStorage.getItem("is_login");
+    const is_admin = sessionStorage.getItem("is_admin");
     if (is_login === "true") {
       setIsLogin(true);
+    }
+    if (is_admin === "true") {
+      setIsAdmin(true);
     }
   }, []);
   return (
@@ -61,7 +68,10 @@ const Header = () => {
               </svg>
               {isAlarmOpen ? <Alertmodal /> : <></>}
             </div>
-
+            {isAdmin? (<div className="cursor-pointer">
+              <Link to="/blacklist">Blacklist 관리</Link>
+            </div>) : (<></>)}
+            
             <div className="cursor-pointer">
               <Link to="/product-create">글 작성하기</Link>
             </div>
