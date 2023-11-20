@@ -38,7 +38,8 @@ const ProductPage = () => {
   // 초기 데이터 렌더링
   useEffect(() => {
       const user_id = sessionStorage.getItem("user_id");
-      if (user_id == data?.owner?.user_id) {
+      console.log(user_id);
+      if (user_id == data?.owner?.user_id && user_id) {
         setIsSeller(true);
       }
   }, [data]);
