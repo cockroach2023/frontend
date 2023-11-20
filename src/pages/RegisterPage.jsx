@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "../components/Header.jsx";
 import axios from "axios";
 import {
@@ -25,7 +25,6 @@ const RegisterPage = () => {
   const [cityValue, setCityValue] = useState("서울특별시");
   const [detail, setDetail] = useState();
   const [detailValue, setDetailValue] = useState([]);
-
   useEffect(() => {
     if (detail) {
       const area = cityValue + " " + detail;
@@ -113,6 +112,10 @@ const RegisterPage = () => {
       formData.append("password", formDatas.password);
       formData.append("activity_area", formDatas.activity_area);
       formData.append("nickname", formDatas.nickname);
+      if(formData) {
+        formData.append("profile", selectedImage);
+      }
+      
 
       const response = await axios.post(
         "/api/user/signup",
@@ -136,6 +139,21 @@ const RegisterPage = () => {
       console.error("Error:", error);
     }
   };
+  const fileInputRef = useRef(null);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [fileName, setFileName] = useState('');
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+    setFileName(file.name);
+  };
+  const handleCustomDivClick = () => {
+    // Trigger the file input click event
+    fileInputRef.current.click();
+  };
+
 
   return (
     <div>
@@ -153,61 +171,74 @@ const RegisterPage = () => {
             <div className="gap-10 flex flex-col justify-center items-center w-1/2">
               <div className="text-5xl">Welcome!</div>
               <div className="w-full">
-                <div className="text-gray-400 w-full">아이디</div>
-                <input
-                  className="border-b w-full focus:outline-none"
-                  name="username"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="w-full">
-                <div className="w-full text-gray-400">비밀번호</div>
-                <input
-                  className="w-full border-b focus:outline-none"
-                  type="password"
-                  name="password"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="w-full">
-                <div className="w-full text-gray-400">활동지역</div>
-
-                <div className="w-full flex gap-2">
-                  <select
-                    className="grow border focus:outline-none py-2 mt-1 rounded-md"
-                    value={cityValue}
-                    onChange={(e) => {
-                      setCityValue(e.target.value);
-                    }}
-                  >
-                    {City.map((value, index) => (
-                      <option value={value} key={index}>
-                        {value}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    className="grow border focus:outline-none py-2 mt-1 rounded-md"
-                    onChange={(e) => {
-                      setDetail(e.target.value);
-                    }}
-                  >
-                    {detailValue.map((value, index) => (
-                      <option value={value} key={index}>
-                        {value}
-                      </option>
-                    ))}
-                  </select>
+                <div className="w-full pt-2">
+                  <div className="text-gray-400 w-full">아이디</div>
+                  <input
+                    className="border-b w-full focus:outline-none"
+                    name="username"
+                    onChange={handleChange}
+                  />
                 </div>
-              </div>
-              <div className="w-full">
-                <div className="w-full text-gray-400">닉네임</div>
+                <div className="w-full pt-2">
+                  <div className="w-full text-gray-400">비밀번호</div>
+                  <input
+                    className="w-full border-b focus:outline-none"
+                    type="password"
+                    name="password"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="w-full pt-2">
+                  <div className="w-full text-gray-400">활동지역</div>
+
+                  <div className="w-full flex gap-2">
+                    <select
+                      className="grow border focus:outline-none py-2 mt-1 rounded-md"
+                      value={cityValue}
+                      onChange={(e) => {
+                        setCityValue(e.target.value);
+                      }}
+                    >
+                      {City.map((value, index) => (
+                        <option value={value} key={index}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="grow border focus:outline-none py-2 mt-1 rounded-md"
+                      onChange={(e) => {
+                        setDetail(e.target.value);
+                      }}
+                    >
+                      {detailValue.map((value, index) => (
+                        <option value={value} key={index}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="w-full pt-2">
+                  <div className="w-full text-gray-400">닉네임</div>
+                  <input
+                    className="w-full border-b focus:outline-none"
+                    name="nickname"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                <div className="text-sm mt-3 p-2 border bg-red-400 text-center text-white rounded-lg cursor-pointer" onClick={handleCustomDivClick}>Upload Profile Image</div>
                 <input
-                  className="w-full border-b focus:outline-none"
-                  name="nickname"
-                  onChange={handleChange}
-                />
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      ref={fileInputRef}
+                      style={{ display: 'none' }}
+                    />
+                </div>
+                {fileName? (<div>{fileName}</div>) : (<div className="text-sm pt-1">파일을 업로드해주세요.</div>)}
               </div>
 
               <button

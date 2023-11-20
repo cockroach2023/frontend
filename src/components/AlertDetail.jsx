@@ -3,33 +3,27 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { titleState } from "../state/atoms.js";
 
-function calculateTimeDifference(dateString) {
-  // 주어진 날짜 문자열을 Date 객체로 변환
-  var targetDate = new Date(dateString);
-  var currentDate = new Date();
+function calculateTimeDifference(inputDate) {
+  const inputDateTime = new Date(inputDate);
+  const currentDateTime = new Date();
+  const timeDifference = currentDateTime - inputDateTime;
+  console.log(timeDifference);
 
-  // 두 날짜의 차이를 밀리초로 계산
-  var timeDifference = currentDate - targetDate;
+  const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+  const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-  // 차이를 초, 분, 시간, 일로 변환
-  var seconds = Math.floor(timeDifference / 1000);
-  var minutes = Math.floor(seconds / 60);
-  var hours = Math.floor(minutes / 60);
-  var days = Math.floor(hours / 24);
-
-  // 결과 반환
-  if (seconds < 60) {
-    return seconds + "초 전";
-  } else if (minutes < 60) {
-    return minutes + "분 전";
-  } else if (hours < 24) {
-    return hours + "시간 전";
+  if (minutesDifference < 60) {
+    return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
+  } else if (hoursDifference < 24) {
+    return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
   } else {
-    return days + "일 전";
+    return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
   }
 }
 
 const AlertDetail = ({ value }) => {
+  console.log(value.created_at);
   const navigate = useNavigate();
   const [title, setTitle] = useRecoilState(titleState);
   const clickAlert = () => {
