@@ -7,7 +7,7 @@ export const fetcher_with_user = (url) => {
 
   const headers = {
     Authorization: `Bearer ${access_token}`,
-    "Content-Type": "application/json", // You may need to adjust the content type based on your API requirements
+    "Content-Type": "application/json",
   };
 
   return axios.get(url, { headers });

@@ -154,26 +154,24 @@ const ProductPage = () => {
     }
   };
 
-  const calculateTimeElapsed = (startTime) => {
-    var currentTime = new Date();
-    var startDate = new Date(startTime);
-    var elapsedMilliseconds = currentTime - startDate;
-    var elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
-    var elapsedMinutes = Math.floor(elapsedSeconds / 60);
-    var elapsedHours = Math.floor(elapsedMinutes / 60);
-    var elapsedDays = Math.floor(elapsedHours / 24);
-
-    if (elapsedDays > 0) {
-      return elapsedDays + "일 전";
-    } else if (elapsedHours > 0) {
-      return elapsedHours + "분 전";
-    } else if (elapsedMinutes > 0) {
-      return elapsedMinutes + "초 전";
+  function calculateTimeDifference(inputDate) {
+    const inputDateTime = new Date(inputDate);
+    const currentDateTime = new Date();
+    const timeDifference = currentDateTime - inputDateTime;
+    console.log(timeDifference);
+  
+    const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+    const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  
+    if (minutesDifference < 60) {
+      return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
+    } else if (hoursDifference < 24) {
+      return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
     } else {
-      return "방금 전";
+      return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
     }
-  };
-
+  }
   const handleModalClose = () => {
     // 모달 외부를 클릭할 때 모달을 닫는 로직 추가
     if (approvePurchaseModal) {
@@ -350,7 +348,8 @@ const ProductPage = () => {
           <div className="flex mx-3 items-center justify-end mb-10">
             <div className="flex items-center gap-4">
               {/* 판매자 프로필 */}
-              <div className="rounded-full bg-gray-400 w-16 h-16" />
+              <div className="rounded-full bg-gray-400 w-16 h-16 bg-contain bg-no-repeat bg-center border" 
+              style={{ backgroundImage: `url(${data?.owner?.profile})` }}/>
               <span>
                 <div className="font-bold">{data?.owner?.username}</div>
               </span>
@@ -360,8 +359,7 @@ const ProductPage = () => {
 
           <div className="border-t">
             <div
-              className="my-6 text-lg font-bold bg-contain bg-no-repeat bg-center"
-              style={{ backgroundImage: `url(${data?.owner?.profile})` }}
+              className="my-6 text-lg font-bold"
             >
               댓글
             </div>
@@ -417,7 +415,7 @@ const ProductPage = () => {
                       <div className="text-gray-400">• 요청자 활동 위치</div>
                       <div>{value?.buyer?.activity_area}</div>
                     </div>
-                    <div>{calculateTimeElapsed(value?.created_at)}</div>
+                    <div>{calculateTimeDifference(value?.created_at)}</div>
                   </div>
                 </div>
               ))}

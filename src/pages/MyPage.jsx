@@ -120,9 +120,10 @@ const MyPage = () => {
         { headers }
       )
       .then((response) => {
-        console.log(response);
+        alert("키워드를 추가하였습니다.");
         mutate();
       });
+      setKeyword("");
   };
   return (
     <div>
@@ -198,7 +199,7 @@ const MyPage = () => {
           <div className="w-60 flex gap-1 flex-wrap">
             <div className="flex flex-col gap-3 mb-10">
               {data?.data.map((value, index) => (
-                <KeywordComponent key={index} value={value} />
+                <KeywordComponent key={index} value={value} mutate={mutate} />
               ))}
             </div>
           </div>

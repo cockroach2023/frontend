@@ -1,8 +1,28 @@
 import React from "react";
+import axios from 'axios';
 
-const KeywordComponent = ({ value }) => {
+const KeywordComponent = ({ value, mutate }) => {
+
+  const removeKeyword = () => {
+    const access_token = sessionStorage.getItem("access_token");
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json",
+    };
+    axios
+      .delete(
+        `/api/keyword?keyword_id=${value.keyword_id}`
+        ,{ headers }
+      )
+      .then((response) => {
+        alert("키워드가 정상적으로 삭제되었습니다.");
+        mutate();
+      });
+  }
+  
   return (
-    <div className="flex gap-2 border w-fit rounded-2xl p-1 items-center justify-center">
+    <div className="flex gap-2 border w-fit rounded-2xl p-1 items-center justify-center cursor-pointer" onClick={removeKeyword}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

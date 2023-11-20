@@ -278,8 +278,8 @@ const MainPage = () => {
   );
 
   useEffect(() => {
-    setCityValue("서울특별시");
-    setDetailValue(Seoul);
+    setCityValue("");
+    setDetailValue("");
   },[])
 
   console.log(data);
@@ -389,6 +389,7 @@ const MainPage = () => {
                     setCityValue(e.target.value);
                   }}
                 >
+                  <option value="">전체</option>
                   {City.map((value, index) => (
                     <option key={index}>{value}</option>
                   ))}
@@ -399,6 +400,7 @@ const MainPage = () => {
                     setDetail(e.target.value);
                   }}
                 >
+                  <option value="">전체</option>
                   {detailValue.map((value, index) => (
                     <option value={value} key={index}>
                       {value}
